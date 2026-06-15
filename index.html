@@ -256,29 +256,14 @@ body.ca .c-dot{width:4px;height:4px;}
 .zeba-name{
   font-family:'Fraunces',serif;
   font-variation-settings:"opsz" 144,"SOFT" 60;
-  font-weight:600;letter-spacing:-.04em;
-  line-height:.92;
+  font-weight:600;letter-spacing:-.035em;
+  font-size:clamp(46px,8.5vw,92px);
+  line-height:.96;color:var(--ink);
   position:relative;display:inline-block;
 }
 .zeba-shimmer{
-  background:linear-gradient(
-    120deg,
-    #15141C 0%,
-    #2A2A33 22%,
-    #B8A8D4 34%,
-    #7B68EE 42%,
-    #EDE8F8 50%,
-    #7B68EE 58%,
-    #B8A8D4 66%,
-    #2A2A33 78%,
-    #15141C 100%
-  );
-  background-size:300% auto;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  animation:zs 4.5s linear infinite;
-  filter:drop-shadow(0 0 32px rgba(74,91,201,.4));
+  color:var(--ink);
+  -webkit-text-fill-color:var(--ink);
 }
 @keyframes zs{0%{background-position:280% center}100%{background-position:0% center}}
 .zeba-line{
