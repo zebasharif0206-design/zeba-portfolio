@@ -111,6 +111,38 @@ body.ca .c-dot{width:4px;height:4px;}
 .nav-arr{transition:transform .3s;}
 .nav-cta:hover .nav-arr{transform:translate(3px,-3px);}
 
+/* ─── Mobile menu / hamburger ─────────────────── */
+.nav-burger{
+  display:none;width:42px;height:42px;border:none;background:none;cursor:pointer;
+  flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0;
+}
+.nav-burger span{
+  display:block;width:23px;height:2px;border-radius:2px;background:var(--ink);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .2s;
+}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-burger.open span:nth-child(2){opacity:0;}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+@media(max-width:780px){.nav-burger{display:flex;}}
+.mobile-menu{
+  position:fixed;inset:0;z-index:95;
+  background:rgba(246,243,238,.97);
+  -webkit-backdrop-filter:blur(22px) saturate(140%);backdrop-filter:blur(22px) saturate(140%);
+  display:flex;flex-direction:column;justify-content:center;gap:2px;padding:0 30px;
+  opacity:0;visibility:hidden;transform:translateY(-14px);
+  transition:opacity .4s ease,transform .45s cubic-bezier(.2,.8,.2,1),visibility .4s;
+}
+.mobile-menu.open{opacity:1;visibility:visible;transform:none;}
+.mobile-menu a{
+  font-family:'Fraunces',serif;font-variation-settings:"opsz" 72,"SOFT" 30;
+  font-size:clamp(32px,8.5vw,50px);font-weight:400;letter-spacing:-.02em;line-height:1.18;
+  color:var(--ink);padding:13px 0;border-bottom:1px solid rgba(20,20,28,.08);
+  transition:color .25s,padding-left .3s;
+}
+.mobile-menu a:active,.mobile-menu a:hover{color:var(--cob);padding-left:10px;}
+@media(min-width:781px){.mobile-menu{display:none;}}
+@media(max-width:640px){#hero .float-a,#hero .float-b,#hero .float-c{display:none;}}
+
 /* ─── Type ────────────────────────────────────── */
 .disp{
   font-family:'Fraunces',serif;
@@ -708,8 +740,18 @@ body.ca .c-dot{width:4px;height:4px;}
       <li><a href="#projects" data-h>Projects</a></li>
       <li><a href="#contact" data-h>Contact</a></li>
     </ul>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div></div>
 </nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" data-h>About</a>
+  <a href="#skills" data-h>Skills</a>
+  <a href="#experience" data-h>Experience</a>
+  <a href="#projects" data-h>Projects</a>
+  <a href="#contact" data-h>Contact</a>
+</div>
 
 <!-- ─── HERO ─────────────────────────────────────── -->
 <section id="hero" class="mesh-hero grain">
@@ -1957,6 +1999,21 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     if(t){e.preventDefault();lenis.scrollTo(t,{duration:1.35});}
   });
 });
+
+/* ── Mobile menu toggle ──────────────────── */
+(function(){
+  var burger=document.getElementById('navBurger'),menu=document.getElementById('mobileMenu');
+  if(!burger||!menu)return;
+  function set(open){
+    burger.classList.toggle('open',open);
+    menu.classList.toggle('open',open);
+    burger.setAttribute('aria-expanded',open?'true':'false');
+    document.body.style.overflow=open?'hidden':'';
+  }
+  burger.addEventListener('click',function(){set(!menu.classList.contains('open'));});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false);});});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+})();
 
 ScrollTrigger.refresh();
 </script>
